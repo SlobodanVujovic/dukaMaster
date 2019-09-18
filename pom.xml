@@ -9,16 +9,23 @@
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>8.0</version>
+            <version>7.0</version>
             <scope>provided</scope>
+        </dependency>
+        <!--Od JEE 8 je dodat JSON-B koji automatski mapira Java objekat u JSON objekat. U JEE 7 to mozes da radis ili sa JSON-P-om ili koristeci nerednu biblioteku.
+        Sa GSON-om je lakse ali ostaje ono prica da imas dependency u projektu.-->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.5</version>
         </dependency>
     </dependencies>
     <build>
         <finalName>DukaMaster</finalName>
     </build>
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
         <failOnMissingWebXml>false</failOnMissingWebXml>
     </properties>
 </project>

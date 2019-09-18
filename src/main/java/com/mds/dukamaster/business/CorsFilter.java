@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Enumeration;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -18,10 +20,18 @@ import javax.servlet.http.HttpServletResponse;
 @WebFilter(urlPatterns = {"/*"})
 public class CorsFilter implements Filter {
 
+    private ServletContext context;
+
     public static final String ALLOWED_METHODS = "GET, POST, PUT, DELETE, OPTIONS, HEAD";
     public final static Integer MAX_AGE = 24 * 60 * 60;
     public final static String DEFAULT_ALLOWED_HEADERS = "origin,accept,content-type";
     public final static String DEFAULT_EXPOSED_HEADERS = "location,info";
+
+    //Posto je u pitanju JEE 7 onda moras da override-ujes i ovaj metod kao i destroy() metod (na dnu). U JEE 8 postoji default-na implementacija za ova dva metoda.
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        this.context = filterConfig.getServletContext();
+    }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
@@ -61,5 +71,10 @@ public class CorsFilter implements Filter {
         }
         retVal.append(defaultHeaders);
         return retVal.toString();
+    }
+
+    @Override
+    public void destroy() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
